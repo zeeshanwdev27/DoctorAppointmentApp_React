@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+
+/* colors : {
+    'primary': '#5f6FFF'                                     //36:43 in video
+} */  
+
+/* gridTemplateColums:{
+   'auto' : 'repeat(autofill, minmax(200px, 1fr))'          // 1:21 in video
+} */
+ 
+ /* Add this color later */
+
+
+ .active hr{
+    @apply block
+ }
+
+
+
+ /* remove this to add scroller in main page   & also remove in SpecialityMenu.jsx */
+ ::-webkit-scrollbar{    
+    @apply hidden
+ }
