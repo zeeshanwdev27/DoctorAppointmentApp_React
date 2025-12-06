@@ -52,5 +52,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-// Start from 30 mints
