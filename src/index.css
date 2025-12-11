@@ -1,12 +1,25 @@
+/* Google OutFit Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+
+/* Tailwind */
 @import "tailwindcss";
 
 
+/* Font Implementation */
+*{
+  font-family: Outfit;
+}
 
-/* Global Primary Color */
+
+
+
+/* Global Custom Color */
 @theme {
   --color-primary: #5f6FFF;
 }
 
+/* Global Custom Grid Auto Colums*/
 @theme {
   --grid-template-columns-auto: repeat(auto-fill, minmax(200px, 1fr));
 }
@@ -16,6 +29,8 @@
 .active hr{
     @apply block
  }
+
+ 
 
  /* remove this to add scroller in main page   & also remove in SpecialityMenu.jsx */
  ::-webkit-scrollbar{    
