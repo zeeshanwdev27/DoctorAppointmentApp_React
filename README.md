@@ -3,16 +3,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <!-- Font i use in this Porject is ~ Google Outfit Font  -->
 https://fonts.google.com/specimen/Outfit
 
@@ -20,7 +10,4 @@ https://fonts.google.com/specimen/Outfit
 
 
 
-
-
-
-Continue from 3:03:00
+Continue from 3:36:00
