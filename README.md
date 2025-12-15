@@ -5,9 +5,3 @@
 
 <!-- Font i use in this Porject is ~ Google Outfit Font  -->
 https://fonts.google.com/specimen/Outfit
-
-
-
-
-
-Continue from 4:35:00
