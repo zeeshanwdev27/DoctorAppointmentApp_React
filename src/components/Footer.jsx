@@ -44,7 +44,7 @@ function Footer() {
       {/* Bottom Footer */}
       <div>
         <hr className='text-gray-300' />
-        <p className='py-5 text-sm text-center'>©️Copyright 2025 @Precripto - All Right Reserved.</p>
+        <p className='py-5 text-sm text-center'>©️Copyright 2025 Precripto - All Right Reserved.</p>
       </div>
 
 
