@@ -50,12 +50,13 @@ const AppContextProvider = (props)=>{
 
     // Share Values
     const value = {                          
-        doctors , 
+        doctors, 
         currencySymbol,
         token, setToken,
         backendUrl,
         userData, setUserData,
-        loadUserProfileDate
+        loadUserProfileDate,
+        getDoctorsData,
     }
 
     // useEffects
