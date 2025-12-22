@@ -27,68 +27,94 @@ function Appointment() {
     // console.log(doctorInfo)
   }
 
-  const getAvailableSlots = async()=>{
 
-    setDocSlots([])
+  // set available slot
+const getAvailableSlots = async () => {
 
-    // getting current date
-    let today = new Date()
-    
-    for(let i=0; i < 7; i++){
+  if (!docInfo) return
 
-        // getting date with index
-        let currentDate = new Date(today)
-        currentDate.setDate(today.getDate() + i)
+  setDocSlots([])
 
-        // setting end time of the date with index
-        let endTime = new Date()
-        endTime.setDate(today.getDate() + i)
-        endTime.setHours(21,0,0,0)
+  const today = new Date()
+  const now = new Date()
 
-        // setting hours
-        if(today.getDate() === currentDate.getDate()){
-          currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
-          currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
-        }
-        else{
-          currentDate.setHours(10)
-          currentDate.setMinutes(0)
-        }
-  
-        let timeSlots = []
-        while(currentDate < endTime){
+  // Clinic working hours
+  const CLINIC_START_HOUR = 10
+  const CLINIC_END_HOUR = 21
 
-          let formattedTime = currentDate.toLocaleTimeString( [], { hour: '2-digit', minute: '2-digit', hour12: true } )
+  // Decide whether to skip today
+  const clinicEndTime = new Date()
+  clinicEndTime.setHours(CLINIC_END_HOUR, 0, 0, 0)
 
-          let day = currentDate.getDate()
-          let month = currentDate.getMonth()+1
-          let year = currentDate.getFullYear()
+  const startIndex = now >= clinicEndTime ? 1 : 0
 
-          const slotDate = day + '_' + month + '_' + year
-          const slotTime = formattedTime
+  let allSlots = []
 
-          const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true
+  for (let i = startIndex; i < startIndex + 7; i++) {
 
-          if(isSlotAvailable){
-            // add slot to array
-            timeSlots.push({
-              datetime: new Date(currentDate),
-              time: formattedTime
-            })
-          }
+    // Base date
+    let currentDate = new Date(today)
+    currentDate.setDate(today.getDate() + i)
 
-          // Inc current time by 30 mints
-          currentDate.setMinutes(currentDate.getMinutes() + 30)
-        }
-  
+    // End time (21:00) for this day
+    let endTime = new Date(currentDate)
+    endTime.setHours(CLINIC_END_HOUR, 0, 0, 0)
 
-        setDocSlots( prev => ([...prev, timeSlots]))
+    // Set starting time
+    if (currentDate.toDateString() === today.toDateString()) {
 
+      // Round to next 30-minute slot
+      let minutes = currentDate.getMinutes()
 
+      if (minutes > 30) {
+        currentDate.setHours(currentDate.getHours() + 1)
+        currentDate.setMinutes(0)
+      } else {
+        currentDate.setMinutes(30)
+      }
+
+      if (currentDate.getHours() < CLINIC_START_HOUR) {
+        currentDate.setHours(CLINIC_START_HOUR, 0, 0, 0)
+      }
+
+    } else {
+      currentDate.setHours(CLINIC_START_HOUR, 0, 0, 0)
     }
 
+    let timeSlots = []
+
+    while (currentDate < endTime) {
+
+      const formattedTime = currentDate.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      })
+
+      const day = currentDate.getDate()
+      const month = currentDate.getMonth() + 1
+      const year = currentDate.getFullYear()
+
+      const slotDate = `${day}_${month}_${year}`
+
+      const isSlotAvailable =
+        !docInfo?.slots_booked?.[slotDate]?.includes(formattedTime)
+
+      if (isSlotAvailable) {
+        timeSlots.push({
+          datetime: new Date(currentDate),
+          time: formattedTime
+        })
+      }
+
+      currentDate.setMinutes(currentDate.getMinutes() + 30)
+    }
+
+    allSlots.push(timeSlots)
   }
 
+  setDocSlots(allSlots)
+}
 
 
   // book appoinments Handler
