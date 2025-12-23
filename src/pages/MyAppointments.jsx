@@ -21,7 +21,7 @@ function MyAppointments() {
       const {data} = await axios.get( backendUrl + '/api/user/appointments', { headers: {Authorization: `Bearer ${token}`}})
 
       if(data.success){
-        // console.log(data.appointments)
+        console.log(data.appointments)
         setAppointments(data.appointments.reverse())                   //reverse because old appointments came first
       }
 
@@ -47,6 +47,23 @@ function MyAppointments() {
       toast.error(error.message)
     }
 
+  }
+
+
+  const handleAppointmentPayment = async(appointment, slotDate, slotTime, appointmentId )=>{
+    console.log(appointment)
+
+    try {
+      const {data} = await axios.post( backendUrl + '/api/payment/create-checkout-session', { items: [appointment.docData], slotDate, slotTime, appointmentId }, { headers: {Authorization: `Bearer ${token}`}} )
+
+    if (data.url) {
+      window.location.href = data.url; 
+    }
+      
+    } catch (error) {
+      console.log(error)
+      toast.error("Payment failed");
+    }
   }
 
 
@@ -80,21 +97,36 @@ function MyAppointments() {
               </div>
 
               <div></div>
+              
+            <div className='flex flex-col gap-2 justify-end'>
+                {item.payment ? (
+                  // If payment is true, show only this disabled button
+                  <button className='sm:min-w-48 py-2 border border-primary rounded bg-primary text-white cursor-not-allowed' disabled>  
+                    Appointment Paid
+                  </button>
+                ) : 
+                !item.cancelled ? (                  
+                  // If not paid and not cancelled, show Pay and Cancel buttons
+                <>
+                <button onClick={() => handleAppointmentPayment(item, item.slotDate, item.slotTime, item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer'>
+                  Pay Online
+                </button>
+                
+                <button onClick={() => cancelAppointment(item.userId, item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300 cursor-pointer'>
+                  Cancel Appointment
+                </button>
+              </>
 
-              <div className='flex flex-col gap-2 justify-end'>
-                {
-                  !item.cancelled &&
-                  <button className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer'>Pay Online</button>
-                }
-                {
-                  !item.cancelled &&
-                  <button onClick={ ()=> cancelAppointment(item.userId, item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300 cursor-pointer'>Cancel Appointment</button>
-                }
-                {
-                  item.cancelled &&
-                  <button className='sm:min-w-48 py-2 border border-red-500 rounded text-red-500'>Appointment Cancelled</button>
-                }
-              </div>
+              ) : (
+                // If cancelled
+                <button className='sm:min-w-48 py-2 border border-red-500 rounded text-red-500'>
+                  Appointment Cancelled
+                </button>
+
+              )}
+
+            </div>
+
 
 
             </div>

@@ -10,6 +10,8 @@ import Appointment from './pages/Appointment.jsx'
 import Navbar from "./components/Navbar.jsx"
 import Footer from "./components/Footer.jsx"
 
+import PaymentSuccess from "./pages/PaymentSuccess.jsx"
+
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -30,6 +32,9 @@ function App() {
         <Route path="/my-profile" element={<MyProfile/>}/>
         <Route path="/my-appointments" element={<MyAppointments/>}/>
         <Route path="/appointment/:docId" element={<Appointment/>}/>
+
+        <Route path="success" element={<PaymentSuccess />} />
+
       </Routes>
       <Footer/>
     
