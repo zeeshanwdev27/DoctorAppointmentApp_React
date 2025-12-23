@@ -32,10 +32,21 @@
 
  
 
- /* remove this to add scroller in main page   & also remove in SpecialityMenu.jsx */
- ::-webkit-scrollbar{    
+ /* scroller remove from all website */
+ /* ::-webkit-scrollbar{    
     @apply hidden
- }
+ } */
+
+ /* Hide scrollbar but keep scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar but keep scrolling for Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
 
 
 

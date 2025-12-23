@@ -214,7 +214,7 @@ const getAvailableSlots = async () => {
         
         <p>Booking slots</p>
 
-        <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
+        <div className='flex gap-3 items-center w-full mt-4 overflow-x-scroll no-scrollbar '>
           {
             docSlots.length && docSlots.map((item, index)=>(
               <div onClick={()=> setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${ slotIndex === index ? 'bg-primary text-white' : 'border border-gray-200' }`} key={index}>
@@ -226,7 +226,7 @@ const getAvailableSlots = async () => {
           }
         </div>
 
-        <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
+        <div className='flex items-center gap-3 w-full mt-4 overflow-x-scroll py-3'>
           {docSlots.length && docSlots[slotIndex].map((item,index)=>(
             <p onClick={()=> setSlotTime(item.time)} className={`text-sm font-light shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-white': 'text-gray-400 border border-gray-300'}`} key={index}>
               {item.time.toLowerCase()}
